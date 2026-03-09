@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Last Visit Tracker - Options</title>
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Settings</h1>
+        <p class="description">How long should the extension wait before showing you the "Welcome back" banner?</p>
+        
+        <div class="form-group">
+            <div class="input-row">
+                <input type="number" id="durationValue" min="1" value="1" required>
+                <select id="durationUnit">
+                    <option value="seconds">Seconds (Test)</option>
+                    <option value="hours">Hours</option>
+                    <option value="days" selected>Days</option>
+                    <option value="weeks">Weeks</option>
+                    <option value="months">Months</option>
+                    <option value="years">Years</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button id="saveBtn" class="primary-btn">Save Settings</button>
+            <span id="statusMessage" class="status-msg"></span>
+        </div>
+    </div>
+    <script src="options.js"></script>
+</body>
+</html>

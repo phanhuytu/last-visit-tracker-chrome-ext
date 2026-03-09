@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Last Visit Tracker",
+  "version": "1.0",
+  "description": "Displays a configurable banner upon revisiting a site after a set time. Works locally per device; doesn't sync or track initial visits.",
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "options_page": "options.html",
+  "icons": {
+    "128": "icon128.png"
+  }
+}
