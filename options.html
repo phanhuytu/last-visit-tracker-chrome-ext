@@ -12,6 +12,14 @@
         <p class="description">How long should the extension wait before showing you the "Welcome back" banner?</p>
         
         <div class="form-group">
+            <label for="trackingMethod" style="display:block; margin-bottom: 8px; font-weight: 500; font-size: 14px; color: #e2e8f0;">Tracking Method</label>
+            <select id="trackingMethod" style="width: 100%; margin-bottom: 20px;">
+                <option value="both" selected>Both Domain & Exact URL</option>
+                <option value="domain">Only By Domain (e.g., example.com)</option>
+                <option value="url">Only By Exact URL (e.g., example.com/page)</option>            
+            </select>
+
+            <label style="display:block; margin-bottom: 8px; font-weight: 500; font-size: 14px; color: #e2e8f0;">Wait Duration</label>
             <div class="input-row">
                 <input type="number" id="durationValue" min="1" value="1" required>
                 <select id="durationUnit">

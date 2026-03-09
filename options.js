@@ -2,6 +2,7 @@
 const saveOptions = () => {
     const value = parseInt(document.getElementById('durationValue').value, 10);
     const unit = document.getElementById('durationUnit').value;
+    const trackingMethod = document.getElementById('trackingMethod').value;
 
     let multiplier = 1;
     switch (unit) {
@@ -19,7 +20,8 @@ const saveOptions = () => {
         { 
             config_durationValue: value,
             config_durationUnit: unit,
-            config_durationMs: durationMs 
+            config_durationMs: durationMs,
+            config_trackingMethod: trackingMethod
         },
         () => {
             // Update status to let user know options were saved.
@@ -44,11 +46,13 @@ const restoreOptions = () => {
         // Default values
         { 
             config_durationValue: 1,
-            config_durationUnit: 'days' 
+            config_durationUnit: 'days',
+            config_trackingMethod: 'both'
         },
         (items) => {
             document.getElementById('durationValue').value = items.config_durationValue;
             document.getElementById('durationUnit').value = items.config_durationUnit;
+            document.getElementById('trackingMethod').value = items.config_trackingMethod;
         }
     );
 };

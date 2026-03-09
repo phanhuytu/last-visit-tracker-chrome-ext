@@ -5,24 +5,39 @@ if (!hostname) {
 
   const now = Date.now();
 
-  chrome.storage.local.get(['siteVisits', 'config_durationMs'], (result) => {
+  chrome.storage.local.get(['siteVisits', 'config_durationMs', 'config_trackingMethod'], (result) => {
     let visits = result.siteVisits || {};
-    let lastVisit = visits[hostname];
     
-    // Default to 1 day if not configured
+    const trackingMethod = result.config_trackingMethod || 'both';
+    const currentUrl = window.location.href.split('#')[0];
     const thresholdMs = result.config_durationMs || (24 * 60 * 60 * 1000);
+    
+    let shouldShowBanner = false;
+    let bannerTimeToShow = null;
 
-    if (lastVisit) {
-      let timeSinceLastVisit = now - lastVisit;
-      
-      // If the last visit was more than the configured threshold
-      if (timeSinceLastVisit > thresholdMs) {
-        showBanner(lastVisit);
-      }
+    if (trackingMethod === 'both' || trackingMethod === 'domain') {
+        const lastDomainVisit = visits[hostname];
+        if (lastDomainVisit && (now - lastDomainVisit) > thresholdMs) {
+            shouldShowBanner = true;
+            bannerTimeToShow = lastDomainVisit;
+        }
+        visits[hostname] = now;
     }
 
-    // Update the last visit time for this domain
-    visits[hostname] = now;
+    if (trackingMethod === 'both' || trackingMethod === 'url') {
+        const lastUrlVisit = visits[currentUrl];
+        if (lastUrlVisit && (now - lastUrlVisit) > thresholdMs) {
+            shouldShowBanner = true;
+            // Prefer showing the more specific URL visit time if both triggered
+            bannerTimeToShow = lastUrlVisit; 
+        }
+        visits[currentUrl] = now;
+    }
+
+    if (shouldShowBanner && bannerTimeToShow) {
+        showBanner(bannerTimeToShow);
+    }
+
     chrome.storage.local.set({ siteVisits: visits });
   });
 
